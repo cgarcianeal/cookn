@@ -9,6 +9,9 @@ import { ArticlesComponent } from './_components/articles/articles.component';
 import { RecipesComponent } from './_components/articles/recipes/recipes.component';
 import { DiscussionsComponent } from './_components/articles/discussions/discussions.component';
 import { ConceptsComponent } from './_components/articles/concepts/concepts.component';
+import { FullArticleComponent } from './_components/full-article/full-article.component';
+import { SearchComponent } from './_components/search/search.component';
+import { AccountComponent } from './_components/account/account.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { ConceptsComponent } from './_components/articles/concepts/concepts.comp
     ArticlesComponent,
     RecipesComponent,
     DiscussionsComponent,
-    ConceptsComponent
+    ConceptsComponent,
+    FullArticleComponent,
+    SearchComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,

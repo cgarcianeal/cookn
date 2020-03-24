@@ -2,7 +2,7 @@ export class Article {
   id: string;
   title: string;
   description?: string;
-  dateCreated: string;
+  dateCreated: number;
   createdBy: string;
   body?: string;
 }
