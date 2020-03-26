@@ -5,4 +5,5 @@ export class Article {
   dateCreated: number;
   createdBy: string;
   body?: string;
+  tags: string[];
 }

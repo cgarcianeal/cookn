@@ -21,12 +21,9 @@ export class ArticlesComponent implements OnInit {
     this.articleService.getAllArticles().subscribe(
       articles => {
         this.articles = articles;
-        console.log('got articles');
-        console.log(this.articles);
 
       },
       error => {
-        console.log("error");
         //this.notifService.showNotif(error, 'error');
       }
     );

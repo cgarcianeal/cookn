@@ -9,3 +9,7 @@
   background-image: url('https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png');
   background-size: cover;
 }
+
+.article-card-chips {
+  display: inline-block;
+}
