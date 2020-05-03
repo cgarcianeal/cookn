@@ -1,0 +1,22 @@
+<body>
+
+  <h1 class="title">{{article.title}}</h1>
+  <div class="subtitle">{{article.description}}</div>
+  <br>
+  <div class="subtitle">submitted by {{article.createdBy}} on {{getArticleTime(article.dateCreated)}}</div>
+  <p>
+    {{article.body}}
+  </p>
+
+  <mat-divider></mat-divider>
+
+  <div class="subtitle">
+    Tags:
+    <br>
+    <mat-chip-list *ngFor="let tag of article.tags" style="display: inline-block;">
+      <mat-chip>{{tag}}</mat-chip>
+    </mat-chip-list>
+  </div>
+
+
+</body>
