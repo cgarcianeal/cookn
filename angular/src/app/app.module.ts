@@ -12,6 +12,8 @@ import { ConceptsComponent } from './_components/articles/concepts/concepts.comp
 import { FullArticleComponent } from './_components/full-article/full-article.component';
 import { SearchComponent } from './_components/search/search.component';
 import { AccountComponent } from './_components/account/account.component';
+import { RegisterComponent } from './_components/register/register.component';
+import { LoginComponent } from './_components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { AccountComponent } from './_components/account/account.component';
     ConceptsComponent,
     FullArticleComponent,
     SearchComponent,
-    AccountComponent
+    AccountComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
