@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Article} from '../../_models/article';
 import {ArticleService} from '../../_services/article.service';
 
@@ -9,6 +9,8 @@ import {ArticleService} from '../../_services/article.service';
 })
 export class ArticlesComponent implements OnInit {
 
+  @Input() collectionName: string;
+
   public articles: Article[];
 
   constructor(private articleService: ArticleService) { }
@@ -18,8 +20,9 @@ export class ArticlesComponent implements OnInit {
   }
 
   loadAllArticles() {
-    this.articleService.getAllArticles().subscribe(
+    this.articleService.getAllArticles(this.collectionName).subscribe(
       articles => {
+        console.log(articles);
         this.articles = articles;
 
       },
@@ -28,6 +31,7 @@ export class ArticlesComponent implements OnInit {
       }
     );
   }
+
 
 
 }

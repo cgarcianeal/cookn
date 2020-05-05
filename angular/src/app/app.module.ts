@@ -1,5 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,6 +18,7 @@ import { SearchComponent } from './_components/search/search.component';
 import { AccountComponent } from './_components/account/account.component';
 import { RegisterComponent } from './_components/register/register.component';
 import { LoginComponent } from './_components/login/login.component';
+import { AddEditComponent } from './_components/add-edit/add-edit.component';
 
 @NgModule({
   declarations: [
@@ -26,15 +31,22 @@ import { LoginComponent } from './_components/login/login.component';
     SearchComponent,
     AccountComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    AddEditComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    MaterialModule
+    MaterialModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

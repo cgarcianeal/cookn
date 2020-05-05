@@ -11,6 +11,7 @@ import {SearchComponent} from './_components/search/search.component';
 import {AccountComponent} from './_components/account/account.component';
 import {LoginComponent} from "./_components/login/login.component";
 import {RegisterComponent} from "./_components/register/register.component";
+import {AddEditComponent} from "./_components/add-edit/add-edit.component";
 
 
 const routes: Routes = [
@@ -21,8 +22,9 @@ const routes: Routes = [
   { path: 'concepts', component: ConceptsComponent, canActivate: [AuthGuard] },
   { path: 'search', component: SearchComponent, canActivate: [AuthGuard] },
   { path: 'account', component: AccountComponent, canActivate: [AuthGuard] },
-  { path: 'article/:id', component: FullArticleComponent, canActivate: [AuthGuard] },
-  { path: '',   redirectTo: '/recipes', pathMatch: 'full' },
+  { path: 'article/:collection/:id', component: FullArticleComponent, canActivate: [AuthGuard] },
+  { path: 'add', component: AddEditComponent, canActivate: [AuthGuard] },
+  { path: '',   redirectTo: 'recipes', pathMatch: 'full' },
   { path: '**', redirectTo: '' }
   ];
 

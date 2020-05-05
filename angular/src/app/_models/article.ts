@@ -1,9 +1,14 @@
+import {User} from './user';
+
 export class Article {
-  id: string;
+  _id: string;
   title: string;
-  description?: string;
-  dateCreated: number;
-  createdBy: string;
+  description: string;
+  createdDate: Date;
+  createdBy: User;
+  tags: string;
+  ingredients?: JSON;
+  instructions?: string;
   body?: string;
-  tags: string[];
+  image?: string
 }

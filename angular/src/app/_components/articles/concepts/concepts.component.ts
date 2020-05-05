@@ -6,9 +6,12 @@ import {ArticlesComponent} from '../articles.component';
   templateUrl: './concepts.component.html',
   styleUrls: ['./concepts.component.css']
 })
-export class ConceptsComponent extends ArticlesComponent implements OnInit {
+export class ConceptsComponent implements OnInit {
 
   //constructor() { }
+
+
+  private collectionName = 'Concepts';
 
   ngOnInit() {
   }

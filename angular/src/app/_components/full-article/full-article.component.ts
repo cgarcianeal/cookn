@@ -11,7 +11,7 @@ import { switchMap } from 'rxjs/operators';
 })
 export class FullArticleComponent implements OnInit {
 
-  private article: Article;
+  private article;
 
   constructor(private articleService: ArticleService,
               private route: ActivatedRoute,
@@ -19,10 +19,12 @@ export class FullArticleComponent implements OnInit {
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
+    let collection = this.route.snapshot.paramMap.get('collection');
 
-    this.articleService.findArticle(id).subscribe(
-      articles => {
-        this.article = articles;
+    this.articleService.findArticle(collection, id).subscribe(
+      article => {
+        console.log(article)
+        this.article = article;
       },
       error => {
         //this.notifService.showNotif(error, 'error');

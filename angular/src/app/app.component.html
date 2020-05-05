@@ -1,4 +1,4 @@
-<mat-toolbar >
+<mat-toolbar *ngIf="currentUser">
   <img src="assets/images/logo.png" height="50px">
   <button mat-button color="primary" routerLink=""><mat-icon>list</mat-icon> Recipes</button>
   <button mat-button color="primary" routerLink="discussions"><mat-icon>speaker_notes</mat-icon> Discussions</button>
@@ -6,6 +6,7 @@
   <div style="flex: 1 1 auto"></div>
   <button mat-button color="primary" routerLink="search"><mat-icon>search</mat-icon></button>
   <button mat-button color="primary" routerLink="account"><mat-icon>account_box</mat-icon> Account</button>
+  <button mat-button color="primary" (click)="logout()"><mat-icon>exit_to_app</mat-icon> Logout</button>
 
 </mat-toolbar>
 

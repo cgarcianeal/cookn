@@ -6,8 +6,10 @@ import {ArticlesComponent} from '../articles.component';
   templateUrl: './discussions.component.html',
   styleUrls: ['./discussions.component.css']
 })
-export class DiscussionsComponent extends ArticlesComponent implements OnInit {
+export class DiscussionsComponent implements OnInit {
 
+
+  private collectionName = 'Discussions';
   //constructor() { }
 
   ngOnInit() {

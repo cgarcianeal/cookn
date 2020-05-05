@@ -1,11 +1,17 @@
+<mat-toolbar>
+  {{this.collectionName}}
+  <div style="flex: 1 1 auto"></div>
+  <button mat-raised-button color="primary" routerLink="/add" ><mat-icon>add</mat-icon> New Post</button>
+</mat-toolbar>
+
 <div *ngFor="let article of articles">
-  <a [routerLink]="['/article', article.id]">
+  <a [routerLink]="['/article', this.collectionName, article._id]">
 
     <mat-card class="article-card">
       <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
         <mat-card-title>{{article.title}}</mat-card-title>
-        <mat-card-subtitle>by {{article.createdBy}}</mat-card-subtitle>
+        <mat-card-subtitle>by {{article.createdBy.username}} @ {{article.createdDate | date}}</mat-card-subtitle>
       </mat-card-header>
       <img class="mat-card-image" mat-card-image src="https://2rdnmg1qbg403gumla1v9i2h-wpengine.netdna-ssl.com/wp-content/uploads/sites/3/2019/10/vitaminDfood-1132105308-770x553-650x428.jpg" />
       <mat-card-content>
@@ -13,7 +19,7 @@
           {{article.description}}
         </p>
         <mat-card-subtitle>Tags:</mat-card-subtitle>
-        <mat-chip-list *ngFor="let tag of article.tags" class="article-card-chips">
+        <mat-chip-list *ngFor="let tag of article.tags.split(',')" class="article-card-chips">
           <mat-chip>{{tag}}</mat-chip>
         </mat-chip-list>
       </mat-card-content>

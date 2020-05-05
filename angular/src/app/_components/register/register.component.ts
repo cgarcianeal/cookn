@@ -6,7 +6,6 @@ import { first } from 'rxjs/operators';
 import { NotificationService } from '../../_services/notification.service';
 import { UserService } from '../../_services/user.service';
 import { AuthService } from '../../_services/auth.service';
-import {Role} from '../../_models/role';
 
 @Component({templateUrl: 'register.component.html',
 

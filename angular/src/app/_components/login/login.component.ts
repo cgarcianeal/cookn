@@ -30,7 +30,11 @@ export class LoginComponent {
   }
 
 
-
+  enterSubmit(event) {
+    if(event.keyCode == 13) {
+      this.login();
+    }
+  }
 
 
   login() {
@@ -44,6 +48,7 @@ export class LoginComponent {
     this.loading = true;
 
     this.loading = true;
+    console.log(this.username, this.password);
     this.authService.login(this.username, this.password)
       .pipe(first())
       .subscribe(

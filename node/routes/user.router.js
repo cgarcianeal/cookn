@@ -8,7 +8,7 @@ const authorize = require('../_helpers/authorize');
 router.post('/authenticate', userController.authenticate);
 router.post('/register', userController.register);
 router.get('/allusers', authorize(Role.admin),userController.getAllUsers);
-//TODO: add the needed routing for setting and getting user goal values. Hint: '/getgoals/:username' Hint2: '/setgoals'
+router.post('/updatebio', authorize([Role.admin, Role.user]), userController.updateBio);
 
 
 module.exports = router;

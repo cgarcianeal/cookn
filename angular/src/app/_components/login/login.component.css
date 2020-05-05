@@ -1,8 +1,37 @@
 .login-card{
 
   display: flex;
-  height: 300px;
   justify-content: center;
   align-items: center;
 
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-card {
+  height: 25%;
+  width: 100%;
+  min-width: 325px;
+}
+
+body {
+  margin: 30px 30%;
+
+}
+
+mat-card-content, mat-card-actions {
+  margin: 0 15%;
+}
+
+.login-btn {
+  float: left;
+  margin: 5px !important;
+  width: 99%;
+  text-align: center;
+}
+
+#login-logo {
+  width: 40%;
 }

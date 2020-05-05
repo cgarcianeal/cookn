@@ -6,7 +6,9 @@ import {ArticlesComponent} from '../articles.component';
   templateUrl: './recipes.component.html',
   styleUrls: ['./recipes.component.css']
 })
-export class RecipesComponent extends ArticlesComponent implements OnInit{
+export class RecipesComponent implements OnInit{
+
+  private collectionName = 'Recipes';
 
   // constructor() { }
 

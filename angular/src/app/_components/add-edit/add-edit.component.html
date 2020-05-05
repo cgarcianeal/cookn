@@ -1,0 +1,81 @@
+<body>
+
+<mat-card>
+  <mat-card-title>Add a new PARecord</mat-card-title>
+  <mat-card-title *ngIf="false"></mat-card-title>
+
+  <mat-divider></mat-divider>
+
+  <form [formGroup]="articleForm" (ngSubmit)="onSubmit(articleForm.value)">
+
+    <mat-form-field>
+      <mat-label>Activity Type</mat-label>
+      <mat-select [(ngModel)]="collection" formControlName="collection">
+        <mat-option value="recipes">Recipes</mat-option>
+        <mat-option value="discussions">Discussions</mat-option>
+        <mat-option value="concepts">Concepts</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Title</mat-label>
+      <input matInput type="text" maxlength="50"  formControlName="title">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <input matInput type="text" maxlength="50" formControlName="description">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Body</mat-label>
+      <textarea matInput type="text" formControlName="body"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Tags</mat-label>
+      <input matInput type="text" maxlength="50"  formControlName="tags">
+    </mat-form-field>
+
+    <div *ngIf="collection === 'recipes'" style="border: solid gray 2px; border-radius: 7px; background-color: #fbfbfb">
+      <h3>Ingredients</h3>
+      <ul>
+          <li *ngFor="let ingredient of ingredients;  let i = index" style="text-align: left; margin: 0">
+            <span style="display: inline-block">{{ingredient[0]}} {{ingredient[1]}}</span>
+            <span style="display: inline-block; vertical-align: bottom"><button style="float:right;" (click)="this.ingredients.splice(i, 1)" mat-icon-button color="warn"><mat-icon style="vertical-align: bottom">clear</mat-icon></button></span>
+
+          </li>
+      </ul>
+
+      <mat-form-field class="ingredients" style="float: left">
+        <mat-label>Ingredient Amount</mat-label>
+        <input matInput type="text" [(ngModel)]="ingredientAmount" maxlength="50" id="ingredientName" formControlName="ingredients">
+      </mat-form-field>
+
+      <mat-form-field class="ingredients" style="float: right;">
+        <mat-label>Ingredient Name</mat-label>
+        <input matInput type="text" [(ngModel)]="ingredientName" maxlength="50" id="ingredientSize" formControlName="ingredients">
+      </mat-form-field>
+
+      <button type="button" color="primary" mat-raised-button (click)="addIngredient()">Add Ingredient</button>
+
+      <br>
+      <mat-form-field>
+        <mat-label>Instructions</mat-label>
+        <textarea matInput type="text" formControlName="instructions"></textarea>
+      </mat-form-field>
+    </div>
+
+
+    <mat-form-field>
+      <mat-label>Image</mat-label>
+      <input matInput type="text" maxlength="50"  formControlName="image">
+    </mat-form-field>
+
+    <button color="primary" mat-raised-button [disabled]="!articleForm.valid" type="submit">Create</button>
+
+  </form>
+
+</mat-card>
+
+</body>

@@ -11,13 +11,14 @@ module.exports = {
     getAllUsers,
     getByUsername,
     addUser,
-    setGoals,
-    getGoals
+    updateBio
 }
 
 async function authenticate({ username, password }) {
 
+    console.log({ username, password });
     const user = await User.findOne({ username });
+    console.log('**********************\n', user);
     if (user && bcrypt.compareSync(password, user.hash)) {
         const { hash, ...userWithoutHash } = user.toObject();
         const token = jwt.sign({ sub: user.id, role: user.role }, config.secret);
@@ -33,7 +34,18 @@ async function getAllUsers() {
     return await User.find().select('-hash');
 }
 
+async function updateBio(userID, bio) {
 
+    let user = await User.findById(userID);
+
+    if (user) {
+        user.bio = bio;
+
+        await user.save();
+    }
+    else
+        throw 'Username "' + userID + '" not found';
+}
 
 async function getByUsername(username) {
 
@@ -43,6 +55,7 @@ async function getByUsername(username) {
 async function addUser(userParam) {
 
     // validate
+
     if (await User.findOne({ username: userParam.username })) {
         throw 'Username "' + userParam.username + '" is already taken';
     }
@@ -63,16 +76,23 @@ async function addUser(userParam) {
 }
 
 
-// TODO: complete this function. It takes in calories and minute goal values in 'values' and saves it for a given userid (_id). Hint: use 'updateOne' from mongoose.
-async function setGoals(values, userid){
+async function setGoals(goals, username){
+    let user = await getByUsername(username);
+    user = user[0];
 
+    user.caloriegoal = goals.caloriegoal;
+    user.minutegoal = goals.minutegoal;
 
+    await user.save();
+
+    return { result: 'success'}
 }
 
-
-// TODO: complete this function. It should return calorie and minute goals for a given user.
 async function getGoals(username){
+    let user = await getByUsername(username);
+    user = user[0];
 
+    return { caloriegoal: user.caloriegoal, minutegoal: user.minutegoal};
 
 }
 
