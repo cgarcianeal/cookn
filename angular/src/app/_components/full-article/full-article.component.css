@@ -1,5 +1,6 @@
 body {
   margin: 15px 15%;
+  white-space: pre-wrap;
 }
 
 .title {
@@ -13,5 +14,5 @@ body {
 }
 
 p {
-  font-size: 1.5em;
+  font-size: 1.1em;
 }

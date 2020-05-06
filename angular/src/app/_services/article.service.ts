@@ -15,6 +15,7 @@ export class ArticleService {
 
   }
 
+
   createArticle(article) {
     return this.http.post(`http://localhost:3030/article/addarticle`, article);
   }
@@ -25,6 +26,18 @@ export class ArticleService {
 
   findArticle(collectionName, id) {
     return this.http.get(`http://localhost:3030/article/${collectionName}/findarticle/${id}`);
+  }
+
+  editArticle(collectionName, id, article) {
+    return this.http.post(`http://localhost:3030/article/edit/${collectionName}/${id}`, article);
+  }
+
+  deleteArticle(collectionName, date) {
+    return this.http.delete(`http://localhost:3030/article/${collectionName}/${date}`);
+  }
+
+  getUserArticles(username) {
+    return this.http.get<Article[]>(`http://localhost:3030/article/getuserarticles/${username}`);
   }
 
 }

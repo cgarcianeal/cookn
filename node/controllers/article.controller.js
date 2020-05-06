@@ -3,6 +3,7 @@ const articleService = require('../services/article.service');
 module.exports = {
     createArticle,
     getArticles,
+    getUserArticles,
     findArticle,
     editArticle,
     deleteArticle
@@ -25,6 +26,17 @@ function getArticles(req,res,next){
         .catch(err => next(err));
 }
 
+function getUserArticles(req,res,next){
+    let username;
+    if (req.url.length > 1) {
+        username = req.url.split('/')[2];
+    }
+
+    articleService.getUserArticles(username)
+        .then(articles => res.json(articles))
+        .catch(err => next(err));
+}
+
 function findArticle(req,res,next){
     let collection, id;
     if (req.url.length > 1) {
@@ -41,6 +53,7 @@ function editArticle(req, res, next) {
     let userID = req.user.sub;
     let collection, id;
     if (req.url.length > 4) {
+        console.log(collection = req.url.split('/'));
         collection = req.url.split('/')[2];
         id = req.url.split('/')[3];
     }

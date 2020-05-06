@@ -5,24 +5,43 @@
 </mat-toolbar>
 
 <div *ngFor="let article of articles">
-  <a [routerLink]="['/article', this.collectionName, article._id]">
+
 
     <mat-card class="article-card">
       <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>{{article.title}}</mat-card-title>
-        <mat-card-subtitle>by {{article.createdBy.username}} @ {{article.createdDate | date}}</mat-card-subtitle>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title [routerLink]="['/article', this.collectionName, article._id]">{{article.title}}</mat-card-title>
+          <mat-card-subtitle>by {{article.createdBy.username}} @ {{article.createdDate | date}}</mat-card-subtitle>
+        <div style="flex: 1 1 auto"></div>
+        <div class="menu" *ngIf="article.createdBy.username == this.authService.currentUserValue.username">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Delete or edit">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <a [routerLink]="['/edit', this.collectionName, article._id]">
+              <button mat-menu-item >
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+              </button>
+            </a>
+            <button mat-menu-item (click)="delete(this.collectionName, article.createdDate)">
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </div>
       </mat-card-header>
-      <img class="mat-card-image" mat-card-image src="https://2rdnmg1qbg403gumla1v9i2h-wpengine.netdna-ssl.com/wp-content/uploads/sites/3/2019/10/vitaminDfood-1132105308-770x553-650x428.jpg" />
+      <a [routerLink]="['/article', this.collectionName, article._id]"><img class="mat-card-image" mat-card-image [src]="article.image" (error)="defaultUrl($event)"/></a>
       <mat-card-content>
         <p>
           {{article.description}}
         </p>
         <mat-card-subtitle>Tags:</mat-card-subtitle>
-        <mat-chip-list *ngFor="let tag of article.tags.split(',')" class="article-card-chips">
-          <mat-chip>{{tag}}</mat-chip>
-        </mat-chip-list>
+        <div *ngIf="article.tags">
+          <mat-chip-list *ngFor="let tag of article.tags.split(' ')" class="article-card-chips">
+            <mat-chip>{{tag}}</mat-chip>
+          </mat-chip-list>
+        </div>
       </mat-card-content>
     </mat-card>
-  </a>
 </div>

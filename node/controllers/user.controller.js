@@ -5,6 +5,7 @@ module.exports = {
     authenticate,
     getAllUsers,
     register,
+    getUser,
     updateBio
 };
 
@@ -21,6 +22,18 @@ function getAllUsers(req, res, next) {
         .catch(err => next(err));
 }
 
+function getUser(req, res, next) {
+    let username;
+    if (req.url.length > 1) {
+        username = req.url.split('/')[2];
+        console.log(username);
+    }
+
+    userService.getByUsername(username)
+        .then(user => res.json(user))
+        .catch(err => next(err));
+}
+
 function register(req, res, next) {
     userService.addUser(req.body)
         .then(() => res.json({}))
@@ -28,9 +41,9 @@ function register(req, res, next) {
 }
 
 function updateBio(req, res, next) {
-    let username = req.user.sub;
+    let userID = req.user.sub;
 
-    userService.updateBio(username, req.body.bio)
+    userService.updateBio(userID, req.body.bio)
         .then(bio => res.json({res: "bio updated"}))
         .catch(err => next(err));
 }

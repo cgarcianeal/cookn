@@ -1,1 +1,63 @@
-<p>account works!</p>
+<div id="left-acc" *ngIf="user">
+  <mat-card><img width="100%" src="assets/images/logo.png" /></mat-card>
+
+  <mat-card>Username: {{user.username}}</mat-card>
+  <mat-card>First Name: {{user.firstName}}</mat-card>
+  <mat-card>Last Name: {{user.lastName}}</mat-card>
+  <mat-card>Email: {{user.email}}</mat-card>
+  <mat-card>Member since {{user.createdDate | date}}</mat-card>
+  <mat-card><p>Bio:</p><br>{{user.bio}}</mat-card>
+
+</div>
+<div id="right-acc">
+  <mat-toolbar>{{user.username}}'s Posts</mat-toolbar>
+  <mat-expansion-panel *ngFor="let collection of articles">
+
+    <mat-expansion-panel-header>
+      {{collection[0]}}
+    </mat-expansion-panel-header>
+
+    <div *ngFor="let article of collection.slice(1, collection.length)">
+
+
+      <mat-card class="article-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title [routerLink]="['/article', collection[0], article._id]">{{article.title}}</mat-card-title>
+          <mat-card-subtitle>by {{article.createdBy.username}} @ {{article.createdDate | date}}</mat-card-subtitle>
+          <div style="flex: 1 1 auto"></div>
+          <div class="menu" *ngIf="article.createdBy.username == this.authService.currentUserValue.username">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Delete or edit">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <a [routerLink]="['/edit', collection[0], article._id]">
+                <button mat-menu-item >
+                  <mat-icon>edit</mat-icon>
+                  <span>Edit</span>
+                </button>
+              </a>
+              <button mat-menu-item (click)="delete(collection[0], article.createdDate)">
+                <mat-icon>delete</mat-icon>
+                <span>Delete</span>
+              </button>
+            </mat-menu>
+          </div>
+        </mat-card-header>
+        <a [routerLink]="['/article', collection[0], article._id]"><img class="mat-card-image" mat-card-image [src]="article.image" /></a>
+        <mat-card-content>
+          <p>
+            {{article.description}}
+          </p>
+          <mat-card-subtitle>Tags:</mat-card-subtitle>
+          <div *ngIf="article.tags">
+            <mat-chip-list *ngFor="let tag of article.tags.split(' ')" class="article-card-chips">
+              <mat-chip>{{tag}}</mat-chip>
+            </mat-chip-list>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-expansion-panel>
+
+</div>

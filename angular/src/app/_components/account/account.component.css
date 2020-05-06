@@ -1,0 +1,33 @@
+#left-acc {
+  width: 32%;
+  float: left;
+}
+
+#right-acc {
+  width: 68%;
+  float: right;
+}
+
+mat-card {
+  margin: 5px;
+}
+
+.article-card {
+  width: 300px;
+  margin: 10px;
+  float: left;
+}
+
+
+.example-header-image {
+  background-image: url('https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png');
+  background-size: cover;
+}
+
+.article-card-chips {
+  display: inline-block;
+}
+
+.description {
+  font-size: 1.0em;
+}

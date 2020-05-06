@@ -12,7 +12,7 @@ module.exports = {
     getByUsername,
     addUser,
     updateBio
-}
+};
 
 async function authenticate({ username, password }) {
 
@@ -76,23 +76,4 @@ async function addUser(userParam) {
 }
 
 
-async function setGoals(goals, username){
-    let user = await getByUsername(username);
-    user = user[0];
-
-    user.caloriegoal = goals.caloriegoal;
-    user.minutegoal = goals.minutegoal;
-
-    await user.save();
-
-    return { result: 'success'}
-}
-
-async function getGoals(username){
-    let user = await getByUsername(username);
-    user = user[0];
-
-    return { caloriegoal: user.caloriegoal, minutegoal: user.minutegoal};
-
-}
 

@@ -1,19 +1,30 @@
 <body>
 
-  <h1 class="title">{{article.title}}</h1>
-  <div class="subtitle">{{article.description}}</div>
+  <h1 class="title">{{article.title}} </h1>
+  <div class="description">{{article.description}}</div>
   <br>
-  <div class="subtitle">submitted by {{article.createdBy.username}} @ {{article.createdDate | date}}</div>
-  <p>
-    {{article.body}}
-  </p>
+  <div class="subtitle">submitted by {{article.createdBy.username}} @ {{article.createdDate | date}} to {{this.collection}}</div>
+  <img style="width: 100%" class="mat-card-image" mat-card-image [src]="article.image" />
+  <p>{{article.body}}</p>
+
+  <div *ngIf="this.collection === 'Recipes'">
+    <h2>Ingredients</h2>
+    <ul>
+      <li *ngFor="let ing of this.ingredients">
+        {{ing[0]}} {{ing[1]}}
+      </li>
+    </ul>
+
+    <h2>Instructions</h2>
+    <p>{{article.instructions}}</p>
+  </div>
 
   <mat-divider></mat-divider>
 
   <div class="subtitle">
     Tags:
     <br>
-    <mat-chip-list *ngFor="let tag of article.tags.split(',')" style="display: inline-block;">
+    <mat-chip-list *ngFor="let tag of article.tags.split(' ') " style="display: inline-block;">
       <mat-chip>{{tag}}</mat-chip>
     </mat-chip-list>
   </div>

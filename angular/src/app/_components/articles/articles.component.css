@@ -13,3 +13,7 @@
 .article-card-chips {
   display: inline-block;
 }
+
+.description {
+  font-size: 1.0em;
+}

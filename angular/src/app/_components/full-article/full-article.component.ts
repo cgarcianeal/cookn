@@ -12,6 +12,8 @@ import { switchMap } from 'rxjs/operators';
 export class FullArticleComponent implements OnInit {
 
   private article;
+  private collection: string;
+  private ingredients = [];
 
   constructor(private articleService: ArticleService,
               private route: ActivatedRoute,
@@ -19,12 +21,13 @@ export class FullArticleComponent implements OnInit {
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
-    let collection = this.route.snapshot.paramMap.get('collection');
+    this.collection = this.route.snapshot.paramMap.get('collection');
 
-    this.articleService.findArticle(collection, id).subscribe(
+    this.articleService.findArticle(this.collection, id).subscribe(
       article => {
-        console.log(article)
+        console.log(article);
         this.article = article;
+        Object.keys(this.article.ingredients).forEach(key => this.ingredients.push([key, this.article.ingredients[key]]));
       },
       error => {
         //this.notifService.showNotif(error, 'error');
@@ -32,19 +35,4 @@ export class FullArticleComponent implements OnInit {
     );
   }
 
-  getArticleTime(UNIX_Timestamp: number) {
-    let date = new Date(UNIX_Timestamp);
-    let month = '' + (date.getMonth() + 1);
-    let day = '' + date.getDate();
-    let year = date.getFullYear();
-
-    let calenderDate = [year, month, day].join('-');
-
-    let hour = date.getHours();
-    let min = date.getMinutes();
-
-    let time = [hour, min].join(':');
-
-    return [calenderDate, time].join(' at ');
-  }
 }

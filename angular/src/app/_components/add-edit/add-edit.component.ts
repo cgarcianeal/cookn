@@ -15,17 +15,14 @@ import {AuthService} from "../../_services/auth.service";
 })
 export class AddEditComponent implements OnInit {
 
-  formItems;
   articleForm;
-  control: FormControl;
+  collection;
 
   ingredients = [];
   ingredientName = '';
   ingredientAmount = '';
 
-  collection;
-
-  private article: Article;
+  private article;
 
 
   constructor( private formBuilder: FormBuilder,
@@ -34,6 +31,7 @@ export class AddEditComponent implements OnInit {
                private notifService: NotificationService,
                private router: Router) {
     this.article = null;
+
 
     this.articleForm = this.formBuilder.group({
       collection: new FormControl('', Validators.required),
@@ -45,15 +43,19 @@ export class AddEditComponent implements OnInit {
       instructions: '',
       image: ''
     });
+
+    if (this.router.url.split('/')[1] === 'edit') {
+      console.log(this.router.url.split('/'))
+
+      this.getArticleEdit(this.router.url.split('/')[2], this.router.url.split('/')[3]);
+
+    }
+
+
   }
 
   ngOnInit() {
-    if (this.router.url.split('/')[2]) {
-      console.log('edit')
 
-      //this.getPAEdit(this.router.url.split('/')[2]);
-
-    }
 
 
   }
@@ -70,44 +72,77 @@ export class AddEditComponent implements OnInit {
     console.log(this.ingredients);
   }
 
-  /*
+  async getArticleEdit(collectionName, id) {
+    this.articleservice.findArticle(collectionName, id).subscribe(
+      article => {
 
-  async getPAEdit(id) {
-    this.parecordservice.getAll().subscribe(
-      parecords => {
-        this.parecord = parecords.find(e => e['id'] === id);
+        this.article = article;
+        Object.keys(this.article.ingredients).forEach(key => this.ingredients.push([key, this.article.ingredients[key]]));
 
-        this.parecordForm = this.formBuilder.group({
-          activityType: `${this.parecord.activityType}`,
-          date: this.parecord.createdDate,
-          calories: this.parecord.calories,
-          minutes: this.parecord.minutes
+        console.log(this.article.ingredients, this.ingredients);
+
+        this.collection = this.router.url.split('/')[2];
+
+        this.articleForm = this.formBuilder.group({
+          collection: `${this.router.url.split('/')[2]}`,
+          title: new FormControl(`${this.article.title}`, Validators.required),
+          description: new FormControl(`${this.article.description}`, Validators.required),
+          body: `${this.article.body}`,
+          tags: new FormControl(`${this.article.tags}`, Validators.required),
+          ingredients: '',
+          instructions: `${this.article.instructions}`,
+          image: `${this.article.image}`
         });
 
-        this.parecordForm.controls['date'].disable();
 
+        this.articleForm.controls['collection'].disable();
       },
       error => {
         this.notifService.showNotif(error.toString(), 'warning'); });
   }
 
-   */
+  checkImage(imageSrc, bad, good) {
+    let img = new Image();
+    img.onerror = bad;
+    img.onload = good;
+    img.src = imageSrc;
+  }
 
-  onSubmit(articleData) {
-
-    console.log(articleData);
-
+  sub(articleData, ingerd) {
     if (this.article) {//edit
+      let body = {
+        title: articleData.title,
+        description: articleData.description,
+        body: articleData.body,
+        tags: articleData.tags,
+        ingredients: ingerd,
+        instructions: articleData.instructions,
+        image: articleData.image,
+        createdBy: this.article.createdBy,
+        createdDate: this.article.createdDate,
+      };
 
+      console.log(this.router.url.split('/')[2], this.router.url.split('/')[3], body);
+
+
+      this.articleservice.editArticle(this.router.url.split('/')[2], this.router.url.split('/')[3], body).pipe(first()).subscribe(
+        resp => {
+          this.router.navigate(['']);
+          this.notifService.showNotif(resp['res'], 'response');
+        }, error => {
+          this.notifService.showNotif(error); });
     }
     else {
+
+      console.log(articleData.image);
+
       let body = {
         article: {
           title: articleData.title,
           description: articleData.description,
           body: articleData.body,
           tags: articleData.tags,
-          ingredients: articleData.ingredients,
+          ingredients: ingerd,
           instructions: articleData.instructions,
           image: articleData.image,
           createdBy: this.authService.currentUserValue,
@@ -116,6 +151,8 @@ export class AddEditComponent implements OnInit {
         "collection":  articleData.collection
       };
 
+      console.log(body);
+
       this.articleservice.createArticle(body).pipe(first()).subscribe(
         resp => {
           this.router.navigate(['']);
@@ -123,34 +160,26 @@ export class AddEditComponent implements OnInit {
         }, error => {
           this.notifService.showNotif(error); });
     }
+  }
 
-    /*
-    if (parecordData.activityType == null || parecordData.date == null || parecordData.minutes == null || parecordData.calories == null) {
-      this.notifService.showNotif('All field must be filled', 'error')
-    }
+  async onSubmit(articleData) {
 
-    if (this.parecord) {
+    console.log(articleData);
 
-      this.parecordservice.edit(this.parecord['id'], parecordData).pipe(first()).subscribe(
-        resp => {
-          this.router.navigate(['']);
-          this.notifService.showNotif('update:' + resp['res'], 'response');
-        }, error => {
-          this.notifService.showNotif(error); });
-    }
-    else {
-      this.parecordservice.add(parecordData).pipe(first()).subscribe(
-        resp => {
-          this.router.navigate(['']);
-          this.notifService.showNotif(resp['result'], 'response');
-        }, error => {
-          this.notifService.showNotif(error); });
-    }
-
-     */
-
+    let ingerd = {};
+    this.ingredients.forEach(e => ingerd[e[0]] = e[1]);
+    console.log(ingerd);
+    //check if image exists
+    let a = await this.checkImage(articleData.image, () => {
+      articleData.image = 'assets/images/logo.png';
+      this.sub(articleData, ingerd);
+      }, () => {
+      this.sub(articleData, ingerd);
+    } );
 
   }
+
+
 
 
 }

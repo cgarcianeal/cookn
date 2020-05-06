@@ -1,0 +1,31 @@
+
+body {
+  margin: 30px 30%;
+
+
+
+}
+
+#login-logo {
+  width: 50%;
+}
+
+
+mat-form-field {
+  width: 70%;
+}
+
+
+.login-btn {
+  float: left;
+  margin: 5px !important;
+  width: 99%;
+  text-align: center;
+}
+
+.registration-card {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: inline-block;
+}

@@ -4,6 +4,7 @@ const db = require('../_helpers/database');
 module.exports = {
     createArticle,
     getArticles,
+    getUserArticles,
     findArticle,
     editArticle,
     deleteArticle
@@ -68,6 +69,31 @@ async function getArticles(collectionName){
     return new Promise((resolve, reject) => {
         setTimeout(()=>{
             resolve(articles);
+        },10);
+
+    });
+}
+
+async function getUserArticles(username){
+
+    console.log(' in service get artuser', username);
+
+
+    let recipes = await db.Recipes.find({createdBy: username}).populate('createdBy');
+    let diss = await db.Discussions.find({createdBy: username}).populate('createdBy');
+    let concepts = await db.Concepts.find({createdBy: username}).populate('createdBy');
+
+    recipes.unshift('Recipes');
+    diss.unshift('Discussions');
+    concepts.unshift('Concepts');
+
+    console.log(recipes, diss, concepts);
+    let userArticles = [recipes, diss, concepts];
+    console.log(userArticles);
+
+    return new Promise((resolve, reject) => {
+        setTimeout(()=>{
+            resolve(userArticles);
         },10);
 
     });
